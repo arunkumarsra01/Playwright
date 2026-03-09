@@ -43,7 +43,7 @@ export default defineConfig({
 
     {
       name: 'INT',
-      use: { ...devices['Desktop Chrome'],baseURL:process.env.INTBaseUrl}
+      use: { ...devices['Desktop Chrome'],baseURL:process.env.INTBaseUrl,headless:true}
     }
     // {
     //   name: 'firefox',
