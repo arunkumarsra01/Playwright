@@ -10,7 +10,7 @@ export const test = base.extend<LoginFixture>({
         const context = await browser.newContext();
         const page = await context.newPage();
         const loginpage = new LoginPage(page);
-        await loginpage.NavigateToUrl("https://demowebshop.tricentis.com/");
+        await loginpage.NavigateToUrl('/');
         await loginpage.NavigateToLoginPage();
         await loginpage.enterCredentials('adminuser@hooli.com', 'adminuser');
         await loginpage.clickLogin();
