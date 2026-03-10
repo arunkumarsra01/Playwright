@@ -40,22 +40,21 @@ export default defineConfig({
     //   name: 'chromium',
     //   use: { ...devices['Desktop Chrome'] },
     // },
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    // { name: 'setup', testMatch: /.*\.setup\.ts/ },
 
-    {
-      name: 'INT',
-      use: { ...devices['Desktop Chrome'], baseURL: process.env.INTBaseUrl, headless: true },
-      dependencies: ['setup']
-    },
+    // {
+    //   name: 'INT',
+    //   use: { ...devices['Desktop Chrome'], baseURL: process.env.INTBaseUrl, headless: true },
+    //   dependencies: ['setup']
+    // },
     {
       name: 'Local',
       use: {
         ...devices['Desktop Chrome'],
-        // baseURL: process.env.INTBaseUrl,
+        baseURL: process.env.INTBaseUrl,
         // headless: false,
-        storageState: 'playwright/.auth/user.json',
       },
-      dependencies: ['setup']
+     
     }
     // {
     //   name: 'firefox',
