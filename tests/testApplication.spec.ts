@@ -8,7 +8,7 @@ test('testing dependency injection', async ({ loginpage }) => {
 
 test('testing dependency injection-part 2', async ({ loginpage }) => {
     await loginpage.registerForSubscription('adminuser@hooli.com')
-    await expect(loginpage.subscriptionMessage).toHaveText('Thank you for signing up! A verification email has been sent. We appreciate your interest.')
+    await expect(loginpage.subscriptionMessage).toHaveText('We appreciate your interest.')
 });
 
 test('testing dependency injection-test', async ({ loginpage }) => {
@@ -17,5 +17,5 @@ test('testing dependency injection-test', async ({ loginpage }) => {
 
 test('testing dependency injection-part 2-test', async ({ loginpage }) => {
     await loginpage.registerForSubscription('adminuser@hooli.com')
-    await expect(loginpage.subscriptionMessage).toHaveText('Thank you for signing up! A verification email has been sent. We appreciate your interest.')
+    await expect(loginpage.subscriptionMessage).toHaveText('Thank you for signing up! A verification email has been sent. We appreciate your')
     })
