@@ -1,45 +1,86 @@
-name: Playwright Tests with Allure
+name: Playwright Tests
+
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
+  # ✅ Step 1 — Run sharded tests
   test:
+    name: Run Tests (Shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2]
+        shardTotal: [3]
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-      
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Install dependencies
         run: npm ci
-        
-      - name: Install Playwright Browsers
+
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
         run: npx playwright test
-        continue-on-error: true # Essential: generates report even if tests fail
+          --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
-      - name: Get Allure history
+      # ✅ Upload each shard's blob report
+      - name: Upload blob report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blob-report-${{ matrix.shardIndex }}
+          path: blob-report/
+          retention-days: 1
+
+  # ✅ Step 2 — Merge all shard reports into one
+  merge-reports:
+    name: Merge Reports
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+
+    steps:
+      - name: Checkout code
         uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
 
-      - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@master
-        if: always()
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          allure_results: allure-results
-          allure_history: allure-history
+          node-version: 18
 
-      - name: Deploy report to Github Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Install dependencies
+        run: npm ci
+
+      # ✅ Download all 3 shard reports
+      - name: Download blob reports
+        uses: actions/download-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
+          path: all-blob-reports/
+          pattern: blob-report-*
+          merge-multiple: true
+
+      # ✅ Merge into single HTML report
+      - name: Merge reports
+        run: npx playwright merge-reports
+          --reporter html ./all-blob-reports
+
+      # ✅ Upload final merged report
+      - name: Upload final HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-playwright-report
+          path: playwright-report/
+          retention-days: 7
