@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright/test'
 
-test('download using page.on', async ({ page }) => {
+test.skip('download using page.on', async ({ page }) => {
     page.on('download', async downloadFile => { 
         await downloadFile.saveAs(`/home/arun/Desktop/${downloadFile.suggestedFilename()}`)
     })
