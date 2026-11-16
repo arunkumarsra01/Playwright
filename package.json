@@ -11,10 +11,11 @@
     "test:Local": "npx playwright test --project Local"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
-    "@types/node": "^25.3.5",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^25.9.9",
     "allure-commandline": "^2.37.0",
-    "allure-playwright": "^3.6.0"
+    "allure-playwright": "^3.6.0",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "dotenv": "^17.3.1"

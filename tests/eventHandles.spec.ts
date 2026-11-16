@@ -135,6 +135,8 @@ test.describe('Peform action in the pop up', () => {
 
     })
 
+    
+
     test('using wait for event', async ({ page }) => { 
         const popupWindow = page.locator('#newTabBtn');
         await popupWindow.scrollIntoViewIfNeeded();

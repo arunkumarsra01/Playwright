@@ -18,9 +18,9 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI
-        ? [['blob']]                          // CI — blob for merging
-        : [['html', { open: 'never' }]],      // Local — html report
+  // reporter: process.env.CI
+  //       ? [['blob']]                          // CI — blob for merging
+  //       : [['html', { open: 'never' }]],      // Local — html report
 
   
   /* Shared settings for all the projects below. */
