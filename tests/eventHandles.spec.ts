@@ -1,29 +1,6 @@
 import { test, expect } from 'playwright/test'
 
-test('download file', async ({ page }) => {
-    await page.goto('https://playwrightlab.github.io/');
-    const downloadBtn = page.locator('#downloadPdfBt');
-    await downloadBtn.scrollIntoViewIfNeeded()
-    const [download] = await Promise.all([
-        page.waitForEvent('download'),
-        downloadBtn.click()
-    ])
-    download.suggestedFilename()
-    await download.saveAs(`/home/arun/Desktop/${download.suggestedFilename()}`)
-    await page.waitForTimeout(4000)
-    await page.locator('').screenshot({})
-})
-
-test.skip('Upload file', async ({ page }) => {
-    await page.goto('https://playwrightlab.github.io/');
-    const uploadFile = page.locator('#singleUploadBrowseLabel');
-    await uploadFile.scrollIntoViewIfNeeded();
-    await uploadFile.setInputFiles('/home/arun/Desktop/testFile.pdf')
-    await page.locator('#singleUploadBtn').click();
-    await expect(page.locator('#singleUploadStatus')).toHaveText('Uploaded successfully!')
-});
-
-test.skip('download using page.on', async ({ page }) => {
+test('download using page.on', async ({ page }) => {
     page.on('download', async downloadFile => { 
         await downloadFile.saveAs(`/home/arun/Desktop/${downloadFile.suggestedFilename()}`)
     })
