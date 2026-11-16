@@ -1,7 +1,7 @@
 import { test, expect } from 'playwright/test'
 
 test('download file', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('https://playwrightlab.github.io/');
     const downloadBtn = page.locator('#downloadPdfBt');
     await downloadBtn.scrollIntoViewIfNeeded()
     const [download] = await Promise.all([
@@ -15,7 +15,7 @@ test('download file', async ({ page }) => {
 })
 
 test.skip('Upload file', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('https://playwrightlab.github.io/');
     const uploadFile = page.locator('#singleUploadBrowseLabel');
     await uploadFile.scrollIntoViewIfNeeded();
     await uploadFile.setInputFiles('/home/arun/Desktop/testFile.pdf')
@@ -27,7 +27,7 @@ test.skip('download using page.on', async ({ page }) => {
     page.on('download', async downloadFile => { 
         await downloadFile.saveAs(`/home/arun/Desktop/${downloadFile.suggestedFilename()}`)
     })
-    await page.goto('/');
+    await page.goto('https://playwrightlab.github.io/');
     const downloadBtn = page.locator('#downloadPdfBtn');
     await downloadBtn.scrollIntoViewIfNeeded()
     await downloadBtn.click()
@@ -36,7 +36,7 @@ test.skip('download using page.on', async ({ page }) => {
 test.describe('Handling windows using page.on method', () => {
 
     test.beforeEach('Login', async ({ page }) => {
-        await page.goto('/');
+        await page.goto('https://playwrightlab.github.io/');
     })
 
     test('Close popup', async ({ page }) => {
@@ -61,7 +61,7 @@ test.describe('Handling windows using page.on method', () => {
 test.describe('Handling windows using wait for event method', () => {
 
     test.beforeEach('Login', async ({ page }) => {
-        await page.goto('/');
+        await page.goto('https://playwrightlab.github.io/');
     })
 
 
@@ -89,7 +89,7 @@ test.describe('Handling windows using wait for event method', () => {
 test.describe('Peform action in the newPage', () => {
 
     test.beforeEach('Login', async ({ page }) => {
-        await page.goto('/');
+        await page.goto('https://playwrightlab.github.io/');
     })
 
     test('Using page-on', async ({ page }) => {
@@ -120,7 +120,7 @@ test.describe('Peform action in the newPage', () => {
 test.describe('Peform action in the pop up', () => {
 
     test.beforeEach('Login', async ({ page }) => {
-        await page.goto('/');
+        await page.goto('https://playwrightlab.github.io/');
     })
 
     test('Using the page-on', async ({ page }) => {
@@ -135,7 +135,7 @@ test.describe('Peform action in the pop up', () => {
 
     })
 
-    
+
 
     test('using wait for event', async ({ page }) => { 
         const popupWindow = page.locator('#newTabBtn');
