@@ -12,13 +12,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
 
   // Generate HTML report
-  reporter: [
-    ['list'],
-    ['html', {
-      outputFolder: 'playwright-report',
-      open: 'never'
-    }]
-  ],
+  reporter: [['junit', { outputFile: 'results.xml' }]],
 
   use: {
     trace: 'on-first-retry',
